@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)file:///C:/Users/hdec/Downloads/high5_m1_v4_1.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIGH-5 · 소통과 인정</title>
+<link href="./HIGH-5 · 소통과 인정_files/css2" rel="stylesheet">
+<style>
+:root{
+  --navy:#08111F;--navy2:#0F1E35;--navy3:#162840;
+  --gold:#F0A500;--gold2:#FFD166;
+  --m1:#3B82F6;--m1l:#EFF6FF;--m1d:#1D4ED8;--m1mid:#93C5FD;
+  --bg:#F0F4F8;--card:#fff;--text:#0F172A;--sub:#475569;--muted:#94A3B8;--border:#E2E8F0;
+  --db-h:172px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);padding-top:var(--db-h);transition:padding-top .35s ease}
+body.db-hidden{padding-top:0}
+
+/* ═══ DASHBOARD ════════════════════════════════ */
+.dashboard{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:linear-gradient(160deg,#060E1A 0%,#0C1B30 55%,#071525 100%);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 6px 40px rgba(0,0,0,.5);
+  transition:transform .35s ease;
+}
+.dashboard.hidden{transform:translateY(-100%)}
+/* inner wrapper — matches main content padding */
+.db-inner{max-width:100%;margin:0 auto;padding:0 32px}
+/* topbar */
+.db-topbar{display:flex;align-items:center;gap:14px;padding:9px 0;background:rgba(0,0,0,.2);border-bottom:1px solid rgba(255,255,255,.06)}
+.db-back{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.8);font-size:13px;font-weight:700;padding:6px 14px;border-radius:7px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;flex-shrink:0}
+.db-brand-main{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:1.5px;color:#fff}
+.db-brand-main span{color:var(--gold)}
+.db-brand-sub{font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px;margin-top:1px}
+/* cells — 6 equal columns */
+.db-cells{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.dbc{padding:9px 14px;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;justify-content:center}
+.dbc:last-child{border-right:none}
+.dbc-lbl{font-size:11px;font-weight:700;letter-spacing:.4px;color:rgba(255,255,255,.38);margin-bottom:2px;white-space:nowrap}
+.dbc-val{font-size:28px;font-weight:900;line-height:1;letter-spacing:-1px}
+.dbc-val .u{font-size:13px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:0;margin-left:1px}
+.dbc-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;white-space:nowrap}
+.gold{color:var(--gold)}
+/* streak */
+.s-row{display:flex;gap:3px;margin-top:4px}
+.sd{width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;background:rgba(255,255,255,.07);color:rgba(255,255,255,.3)}
+.sd.on{background:var(--gold);color:var(--navy)}
+.sd.today{background:rgba(240,165,0,.22);color:var(--gold);border:1.5px solid var(--gold)}
+/* missions */
+.db-mis{padding:9px 12px}
+.db-mis-lbl{font-size:11px;font-weight:700;color:rgba(255,255,255,.38);margin-bottom:5px;letter-spacing:.3px}
+.mi-list{display:flex;flex-direction:column;gap:3px}
+.mi{display:flex;align-items:center;gap:0}
+.mi-chk{width:17px;height:17px;border-radius:50%;background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:8px;color:transparent;transition:all .2s;flex-shrink:0}
+.mi-chk.done{background:var(--m1);border-color:var(--m1);color:#fff}
+.mi-txt{font-size:12px;color:rgba(255,255,255,.7);flex:1;padding-left:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mi-pts{font-size:12px;font-weight:700;color:var(--gold2);text-align:right;padding-left:10px;white-space:nowrap;flex-shrink:0;min-width:52px}
+/* progress cell */
+.dbc-prog{padding:9px 12px;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;justify-content:center;position:relative}
+.db-pbar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin:5px 0 3px;overflow:hidden}
+.db-pfill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--m1),var(--m1mid))}
+.db-pbtn{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);background:none;border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:2px 8px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;display:inline-block;width:fit-content;margin-top:2px}
+.db-pbtn:hover{color:var(--m1mid);border-color:rgba(59,130,246,.3)}
+.prog-inline{display:none;position:absolute;top:100%;left:0;right:0;background:var(--navy2);border:1px solid rgba(255,255,255,.1);border-radius:0 0 10px 10px;padding:10px 14px;z-index:600;box-shadow:0 8px 32px rgba(0,0,0,.45)}
+.prog-inline.open{display:block}
+.pil-title{font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:8px}
+.pil-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.pil-row:last-child{margin-bottom:0}
+.pil-lbl{font-size:11px;color:rgba(255,255,255,.5);min-width:66px;flex-shrink:0}
+.pil-bw{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.pil-bf{height:100%;border-radius:3px}
+.pil-pct{font-size:11px;font-weight:700;color:rgba(255,255,255,.65);min-width:30px;text-align:right}
+/* leader */
+.db-leader{padding:9px 12px;background:rgba(239,68,68,.05);border-left:1px solid rgba(239,68,68,.12)}
+.db-leader-lbl{font-size:11px;font-weight:700;color:rgba(255,120,120,.5);margin-bottom:4px;letter-spacing:.3px}
+.lm{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px;color:rgba(255,255,255,.65)}
+.lm-av{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}
+.lm-st{margin-left:auto;font-size:11px;font-weight:700}
+.lm-done{color:#34D399}.lm-todo{color:rgba(255,140,140,.8)}
+.nudge-btn{width:100%;margin-top:5px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.25);color:rgba(255,160,160,.85);font-size:11px;font-weight:700;padding:5px;border-radius:6px;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+
+/* ── DASHBOARD TOGGLE BUTTON ───── */
+.db-toggle-wrap{display:flex;justify-content:center;margin-bottom:16px}
+.db-toggle-btn{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:rgba(255,255,255,.7);font-size:12px;font-weight:700;padding:7px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.12);cursor:pointer;font-family:'Noto Sans KR',sans-serif;box-shadow:0 2px 12px rgba(0,0,0,.2);transition:all .2s}
+.db-toggle-btn:hover{background:var(--navy3);color:#fff}
+
+/* ═══ MAIN ════════════════════════════════════ */
+.main{width:100%;padding:22px 32px 80px}
+
+/* HERO - simplified */
+.page-hero{
+  background:var(--navy);border-radius:16px;padding:26px 40px;margin-bottom:22px;
+  position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+}
+.page-hero::after{content:'MONTH 1';font-family:'Bebas Neue',sans-serif;font-size:160px;position:absolute;right:-10px;bottom:-20px;color:rgba(255,255,255,.025);line-height:1;pointer-events:none}
+.ph-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:var(--m1mid);font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 12px;border-radius:999px;margin-bottom:12px;text-transform:uppercase}
+.ph-badge::before{content:'●';font-size:6px;animation:blink 2s infinite}
+.ph-month-title{font-size:28px;font-weight:900;color:#fff;margin-bottom:8px}
+.ph-keymsg{display:inline-block;font-size:18px;font-weight:700;color:var(--gold2);background:rgba(240,165,0,.1);border-left:4px solid var(--gold);padding:10px 18px;border-radius:0 10px 10px 0}
+
+/* WEEK TABS */
+.week-nav{display:flex;gap:8px;margin-bottom:26px}
+.wn-btn{flex:1;padding:13px 8px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .2s;font-family:'Noto Sans KR',sans-serif;text-align:center}
+.wn-btn:hover{border-color:var(--m1mid);color:var(--m1)}
+.wn-btn.active{background:var(--m1);color:#fff;border-color:var(--m1);box-shadow:0 4px 14px rgba(59,130,246,.3)}
+.wn-sub{font-size:11px;font-weight:500;opacity:.75;display:block;margin-top:2px}
+.week-panel{display:none;animation:fadeUp .28s ease}
+.week-panel.active{display:block}
+.sec-label{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ─── WEEK 1 ─────────────────────────── */
+.w1-intro{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:16px 24px;margin-bottom:20px;font-size:15px;color:var(--sub);line-height:1.8}
+/* two Q cards side by side */
+.balance-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.balance-q-card{background:var(--card);border-radius:16px;border:1px solid var(--border);padding:22px 26px}
+.bq-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:10px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.bq-label::before{content:'Q';background:var(--m1);color:#fff;font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bq-question{font-size:15px;color:var(--text);font-weight:700;margin-bottom:16px;line-height:1.6}
+.bq-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.bq-choice{padding:16px 14px;border-radius:10px;border:2px solid var(--border);text-align:center;cursor:pointer;transition:all .2s;font-size:14px;font-weight:700;color:var(--sub);background:var(--bg);line-height:1.5}
+.bq-choice:hover{border-color:var(--m1mid);color:var(--m1)}
+.bq-choice.sel-a{border-color:var(--m1);background:var(--m1l);color:var(--m1d)}
+.bq-choice.sel-b{border-color:#8B5CF6;background:#F5F3FF;color:#6D28D9}
+.dist-wrap{margin-top:4px}
+.dist-lrow{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px}
+.dist-la{color:var(--m1)}.dist-lb{color:#8B5CF6}
+.dist-bar{display:flex;height:18px;border-radius:9px;overflow:hidden;border:1px solid var(--border)}
+.dist-ba{background:linear-gradient(90deg,var(--m1d),var(--m1));display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:800;color:#fff}
+.dist-bb{background:linear-gradient(90deg,#8B5CF6,#A855F7);display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:800;color:#fff;flex:1}
+/* leader messages */
+.leader-msgs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.lmsg-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.lmsg-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:#FAFBFD}
+/* person photo avatar */
+.person-photo{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.person-photo svg{width:100%;height:100%}
+.lmsg-name{font-size:18px;font-weight:900;color:var(--text)}
+.lmsg-role{font-size:12px;color:var(--muted);margin-top:2px}
+.lmsg-choice-badge{margin-left:auto;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.lmsg-body{padding:14px 16px}
+.lmsg-q-lbl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px;letter-spacing:.5px}
+.lmsg-q-row{margin-bottom:10px}
+.lmsg-selected{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:7px;margin-bottom:5px}
+.reason-btn{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--m1);cursor:pointer;font-weight:600;background:none;border:none;padding:0;font-family:'Noto Sans KR',sans-serif}
+.lmsg-memo{display:none;background:#FEFDF0;border:1px solid #E8F0A0;border-radius:8px;padding:12px 14px;margin-top:5px;font-size:13px;color:#3D4A1A;line-height:1.85;animation:fadeUp .2s}
+.lmsg-memo.open{display:block}
+.lmsg-footer{padding:10px 16px;background:#F8FAFB;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.like-btn{display:flex;align-items:center;gap:3px;font-size:13px;color:var(--muted);cursor:pointer;background:none;border:none;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:4px 8px;border-radius:6px;transition:all .15s}
+.like-btn:hover,.like-btn.liked{color:#EF4444;background:rgba(239,68,68,.07)}
+.cmt-btn{display:flex;align-items:center;gap:3px;font-size:13px;color:var(--muted);cursor:pointer;background:none;border:none;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:4px 8px;border-radius:6px;transition:all .15s}
+.cmt-btn:hover{color:var(--m1);background:var(--m1l)}
+.cmt-area{border-top:1px solid var(--border);padding:12px 16px;display:none;background:#FAFBFF}
+.cmt-area.open{display:block}
+.cmt-item{font-size:13px;color:var(--sub);padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;line-height:1.6}
+.cmt-item:last-child{border-bottom:none}
+.ci-av{width:22px;height:22px;border-radius:50%;background:var(--m1l);color:var(--m1d);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.cmt-irow{display:flex;gap:7px;margin-top:8px}
+.cmt-input{flex:1;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none}
+.cmt-input:focus{border-color:var(--m1)}
+.cmt-send{background:var(--m1);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+
+/* ─── WEEK 2 ─────────────────────────── */
+.w2-layout{display:grid;grid-template-columns:400px 1fr;gap:18px;align-items:start}
+.w2-leader-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:sticky;top:calc(var(--db-h) + 12px)}
+.w2lp-header{background:var(--navy);padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.w2lp-tag{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--m1mid);text-transform:uppercase;margin-bottom:4px}
+.w2lp-title{font-size:16px;font-weight:800;color:#fff}
+.lmi{border-bottom:1px solid var(--border);padding:16px 20px}
+.lmi:last-child{border-bottom:none}
+.lmi-role{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.lmi-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lmi-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:8px}
+.lmi-msg{font-size:15px;font-weight:600;color:var(--text);line-height:1.8;background:var(--m1l);border-left:4px solid var(--m1);padding:11px 14px;border-radius:0 9px 9px 0;font-style:italic}
+/* relay board */
+.relay-board{background:#F4F8ED;border-radius:14px;border:2px solid #C0D4A0;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,.06)}
+.rb-header{padding:12px 20px;background:#E4EFC4;border-bottom:2px solid #C0D4A0;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.rb-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:#3D5010;white-space:nowrap}
+.rb-prog-wrap{display:flex;flex-direction:column;gap:3px;flex:0 0 auto;min-width:160px;max-width:200px}
+.rb-prog-top{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#3D5010}
+.rb-prog-bar{height:10px;background:rgba(61,80,16,.1);border-radius:5px;overflow:hidden;display:flex}
+.rb-seg{height:100%;transition:all .3s}
+.rb-body{padding:16px 20px;max-height:400px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.1) transparent}
+.rb-body::-webkit-scrollbar{width:4px}
+.rb-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:4px}
+.chalk-line{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(61,80,16,.1);animation:fadeUp .3s ease both}
+.chalk-line:last-child{border-bottom:none}
+.cl-num{font-family:'Bebas Neue',sans-serif;font-size:17px;color:rgba(61,80,16,.3);flex-shrink:0;min-width:20px;padding-top:1px}
+.cl-msg{font-size:15px;color:#2A3A0A;line-height:1.75;flex:1;font-weight:500}
+.cl-like{background:none;border:none;cursor:pointer;font-size:13px;color:rgba(61,80,16,.4);flex-shrink:0;padding:3px 7px;border-radius:6px;transition:all .15s;display:flex;align-items:center;gap:3px}
+.cl-like:hover,.cl-like.on{color:#B45309;background:rgba(180,83,9,.08)}
+.rb-input-area{padding:12px 20px;background:#E4EFC4;border-top:2px solid #C0D4A0}
+.rb-next{font-size:13px;color:#3D5010;margin-bottom:7px}
+.rb-next strong{font-weight:800}
+.rb-irow{display:flex;gap:7px}
+.rb-input{flex:1;background:#fff;border:1.5px solid #C0D4A0;border-radius:8px;padding:10px 14px;font-size:14px;color:var(--text);font-family:'Noto Sans KR',sans-serif;outline:none}
+.rb-input:focus{border-color:var(--m1)}
+.rb-input::placeholder{color:#9AAA70}
+.rb-send{background:var(--m1);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif}
+.rb-nominate{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
+
+/* ─── WEEK 3 ─────────────────────────── */
+/* sticker picker always visible at top */
+.w3-top-picker{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px 24px;margin-bottom:18px}
+.w3-tp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.w3-tp-title{font-size:16px;font-weight:800;color:var(--text)}
+.w3-tp-guide{font-size:13px;color:var(--muted)}
+.w3-tp-sel{font-size:14px;font-weight:700;color:var(--m1)}
+.stickers-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.sticker-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all .18s;padding:10px 8px;border-radius:14px;border:2px solid var(--border);background:#fff;min-width:78px}
+.sticker-item:hover{border-color:var(--m1);box-shadow:0 3px 12px rgba(59,130,246,.15)}
+.sticker-item.chosen{border-color:var(--m1);background:var(--m1l);box-shadow:0 3px 16px rgba(59,130,246,.3)}
+.s-circle{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;border:2.5px solid rgba(255,255,255,.9);box-shadow:0 2px 10px rgba(0,0,0,.14);transition:transform .15s}
+.sticker-item:hover .s-circle{transform:scale(1.1) rotate(-4deg)}
+.sticker-item.chosen .s-circle{transform:scale(1.12)}
+.s-name{font-size:11px;font-weight:700;color:var(--sub);text-align:center;line-height:1.2}
+.sticker-item.chosen .s-name{color:var(--m1d)}
+.w3-apply-row{display:flex;align-items:center;gap:12px}
+.w3-apply-btn{background:var(--m1);color:#fff;border:none;border-radius:10px;padding:11px 26px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.w3-apply-btn:hover{background:var(--m1d)}
+.w3-apply-btn:disabled{opacity:.35;cursor:not-allowed}
+.w3-sel-info{font-size:13px;color:var(--sub)}
+/* layout */
+.w3-layout{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:start}
+.sticker-rank-panel{background:linear-gradient(160deg,#1A2E10,#243A18);border-radius:14px;border:2px solid #3A5820;padding:16px;position:sticky;top:calc(var(--db-h) + 12px)}
+.srp-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:rgba(255,255,255,.5);margin-bottom:12px}
+.srp-row{display:flex;align-items:center;gap:9px;padding:8px 4px;border-bottom:1px dashed rgba(255,255,255,.08)}
+.srp-row:last-child{border-bottom:none}
+.srp-rank{font-family:'Bebas Neue',sans-serif;font-size:19px;color:rgba(255,255,255,.25);min-width:20px;text-align:center}
+.srp-rank.gold{color:var(--gold)}.srp-rank.silver{color:#C0C0C0}.srp-rank.bronze{color:#CD7F32}
+.srp-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;border:2px solid rgba(255,255,255,.18)}
+.srp-info{flex:1}
+.srp-name{font-size:13px;color:rgba(255,255,255,.85);font-weight:700}
+.srp-sb{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(240,165,0,.15);color:var(--gold2);margin-top:2px}
+.srp-cnt{font-size:12px;font-weight:700;color:rgba(255,255,255,.4)}
+/* member area */
+.sticker-area{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.sa-header{padding:16px 22px;border-bottom:1px solid var(--border);background:#FAFBFD;display:flex;align-items:center;justify-content:space-between}
+.sa-title{font-size:15px;font-weight:800;color:var(--text)}
+.sa-guide{font-size:12px;color:var(--muted)}
+.sa-members{padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px}
+.member-card{background:var(--bg);border-radius:13px;border:2px solid var(--border);padding:16px 10px 12px;text-align:center;transition:all .2s;cursor:pointer}
+.member-card:hover{border-color:var(--m1mid);box-shadow:0 3px 14px rgba(59,130,246,.12)}
+.member-card.selected{border-color:var(--m1);background:var(--m1l)}
+.mc-face{width:58px;height:58px;border-radius:50%;margin:0 auto 9px;overflow:hidden;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.mc-face svg{width:100%;height:100%}
+.mc-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px}
+/* applied stickers - round circles with name below */
+.mc-stickers-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+.mc-applied-sticker{display:flex;flex-direction:column;align-items:center;gap:2px}
+.mc-ast-circle{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15);transition:transform .2s}
+.mc-ast-circle:hover{transform:scale(1.12)}
+.mc-ast-name{font-size:8px;font-weight:700;color:var(--sub);text-align:center;line-height:1.2;max-width:40px}
+
+/* ─── WEEK 4 ─────────────────────────── */
+.w4-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;max-width:760px;margin:0 auto}
+.w4-header{padding:24px 30px;background:var(--navy);color:#fff}
+.w4h-lbl{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--m1mid);text-transform:uppercase;margin-bottom:5px}
+.w4h-title{font-size:22px;font-weight:900;margin-bottom:4px}
+.w4h-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.75}
+.w4-body{padding:28px 30px}
+.w4-role-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:12px;font-weight:700;padding:5px 13px;border-radius:999px;margin-bottom:18px}
+.w4-flbl{font-size:14px;font-weight:800;color:var(--text);margin-bottom:5px}
+.w4-fdesc{font-size:13px;color:var(--muted);margin-bottom:9px;line-height:1.65}
+.w4-ta{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:14px;font-family:'Noto Sans KR',sans-serif;line-height:1.8;color:var(--text);outline:none;resize:vertical;min-height:110px;transition:border .2s}
+.w4-ta:focus{border-color:var(--m1)}
+.w4-dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.w4-df{background:var(--bg);border-radius:9px;padding:12px 14px}
+.w4-dfl{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.w4-dfi{width:100%;border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:#fff;outline:none;color:var(--text)}
+.w4-dfi:focus{border-color:var(--m1)}
+.w4-photo-lbl{font-size:14px;font-weight:800;color:var(--text);margin-bottom:8px;margin-top:18px}
+.w4-drop{display:flex;align-items:center;gap:12px;cursor:pointer;padding:16px;background:var(--bg);border:2px dashed var(--border);border-radius:10px;transition:border .2s}
+.w4-drop:hover{border-color:var(--m1)}
+.w4-submit{width:100%;margin-top:20px;background:var(--m1);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .18s}
+.w4-submit:hover{background:var(--m1d);box-shadow:0 4px 16px rgba(59,130,246,.3)}
+.w4-result{padding:24px 30px;background:var(--bg);border-top:1px solid var(--border);display:none}
+.w4-result.show{display:block}
+.w4r-lbl{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:9px}
+.w4r-rule{font-size:17px;font-weight:800;color:var(--m1d);background:var(--m1l);border:1.5px solid var(--m1mid);border-radius:10px;padding:14px 18px;line-height:1.7;margin-bottom:11px}
+.w4r-dets{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.w4r-det{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 13px}
+.w4r-dk{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:2px}
+.w4r-dv{font-size:13px;color:var(--text);font-weight:600}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="db">
+  <div class="db-inner">
+  <div class="db-topbar">
+    <button class="db-back" onclick="history.back()">← 보고서</button>
+    <div style="display:flex;flex-direction:column">
+      <div class="db-brand-main">GROUND IN : <span>HIGH-5</span></div>
+      <div class="db-brand-sub">5대 조직문화 지향점 내재화 프로그램</div>
+    </div>
+  </div>
+  <div class="db-cells">
+
+    <!-- 나의 누적 포인트 + 우리팀 -->
+    <div class="dbc" style="padding:9px 16px;border-right:none;background:rgba(240,165,0,.06)">
+      <div class="dbc-lbl">나의 누적 포인트</div>
+      <div class="dbc-val gold" style="font-size:36px">1,240<span class="u">P</span></div>
+      <div class="dbc-sub" style="color:rgba(240,165,0,.55);font-weight:700">이번주 +320P 획득</div>
+      <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.06)">
+        <div class="dbc-lbl" style="font-size:10px">우리팀 전체 포인트</div>
+        <div style="font-size:18px;font-weight:700;color:#fff;line-height:1">8,540<span style="font-size:11px;color:rgba(255,255,255,.4);font-weight:500">P</span></div>
+        <div class="dbc-sub" style="font-size:10px">이번주 +1,240P</div>
+      </div>
+    </div>
+
+    <!-- 랭킹 -->
+    <div class="dbc" style="padding:9px 14px">
+      <div class="dbc-lbl">나의 포인트 랭킹</div>
+      <div class="dbc-val gold" style="font-size:30px">23<span class="u">위</span></div>
+      <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.06)">
+        <div class="dbc-lbl" style="font-size:10px">우리팀 포인트 랭킹</div>
+        <div style="font-size:20px;font-weight:900;color:#fff;line-height:1">3<span style="font-size:11px;color:rgba(255,255,255,.4);font-weight:500">위</span></div>
+        <div class="dbc-sub" style="font-size:10px">전체 142팀 중</div>
+      </div>
+    </div>
+
+    <!-- 스트릭 -->
+    <div class="dbc">
+      <div class="dbc-lbl">연속 참여 스트릭</div>
+      <div class="dbc-val">4<span class="u" style="color:#fff">일</span></div>
+      <div class="s-row">
+        <div class="sd on">월</div><div class="sd on">화</div><div class="sd on">수</div>
+        <div class="sd on">목</div><div class="sd today">금</div><div class="sd">토</div><div class="sd">일</div>
+      </div>
+      <div class="dbc-sub" style="margin-top:3px;font-size:10px">5일 달성 시 🔥 +100P</div>
+    </div>
+
+    <!-- 일일 미션 -->
+    <div class="db-mis">
+      <div class="db-mis-lbl">오늘의 일일 미션</div>
+      <div class="mi-list">
+        <div class="mi"><button class="mi-chk done" onclick="toggleMi(this)">✓</button><span class="mi-txt">오늘 리더 메시지 읽기</span><span class="mi-pts">+10P ✓</span></div>
+        <div class="mi"><button class="mi-chk done" onclick="toggleMi(this)">✓</button><span class="mi-txt">팀원 메시지에 공감 1회 누르기</span><span class="mi-pts">+5P ✓</span></div>
+        <div class="mi"><button class="mi-chk" onclick="toggleMi(this)"></button><span class="mi-txt">이번 주 미션 참여하기</span><span class="mi-pts">+20P</span></div>
+        <div class="mi"><button class="mi-chk" onclick="toggleMi(this)"></button><span class="mi-txt">전사 랭킹 확인하기</span><span class="mi-pts">+5P</span></div>
+        <div class="mi"><button class="mi-chk" onclick="toggleMi(this)"></button><span class="mi-txt">팀원 전체 참여하기</span><span class="mi-pts">+50P</span></div>
+      </div>
+    </div>
+
+    <!-- 진행률 -->
+    <div class="dbc-prog">
+      <div class="dbc-lbl">우리팀 진행률</div>
+      <div class="dbc-val" style="color:#fff">78<span class="u">%</span></div>
+      <div class="db-pbar"><div class="db-pfill" style="width:78%"></div></div>
+      <div class="dbc-sub">11 / 14명 완료 · Week 2</div>
+      <button class="db-pbtn" onclick="toggleProg(this)">📊 실/본부 상세 ▾</button>
+      <div class="prog-inline" id="progInline">
+        <div class="pil-title">실 · 본부 단위 진행률</div>
+        <div class="pil-row"><span class="pil-lbl">전략사업본부</span><div class="pil-bw"><div class="pil-bf" style="width:90%;background:#10B981"></div></div><span class="pil-pct">90%</span></div>
+        <div class="pil-row"><span class="pil-lbl">기획운영실</span><div class="pil-bw"><div class="pil-bf" style="width:75%;background:var(--m1)"></div></div><span class="pil-pct">75%</span></div>
+        <div class="pil-row"><span class="pil-lbl">개발본부</span><div class="pil-bw"><div class="pil-bf" style="width:82%;background:var(--m1)"></div></div><span class="pil-pct">82%</span></div>
+        <div class="pil-row"><span class="pil-lbl">마케팅실</span><div class="pil-bw"><div class="pil-bf" style="width:60%;background:#F59E0B"></div></div><span class="pil-pct">60%</span></div>
+        <div class="pil-row"><span class="pil-lbl">영업본부</span><div class="pil-bw"><div class="pil-bf" style="width:55%;background:#F59E0B"></div></div><span class="pil-pct">55%</span></div>
+      </div>
+    </div>
+
+    <!-- 팀장 현황 -->
+    <div class="db-leader">
+      <div class="db-leader-lbl">👑 팀장 현황판</div>
+      <div class="lm"><div class="lm-av">김</div>김민준<span class="lm-st lm-done">완료</span></div>
+      <div class="lm"><div class="lm-av">이</div>이서연<span class="lm-st lm-done">완료</span></div>
+      <div class="lm"><div class="lm-av">박</div>박도현<span class="lm-st lm-todo">미완료</span></div>
+      <div class="lm"><div class="lm-av">최</div>최지우<span class="lm-st lm-todo">미완료</span></div>
+      <button class="nudge-btn">📨 미완료 독려</button>
+    </div>
+
+  </div><!-- /db-cells -->
+  </div><!-- /db-inner -->
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- dashboard toggle -->
+  <div class="db-toggle-wrap">
+    <button class="db-toggle-btn" id="dbToggleBtn" onclick="toggleDB()">▲ 대시보드 숨기기</button>
+  </div>
+
+  <!-- HERO - minimal -->
+  <div class="page-hero">
+    <div class="ph-badge">Month 1 · 소통과 인정</div>
+    <div class="ph-month-title">소통과 인정</div>
+    <div class="ph-keymsg">"폭넓게 정보를 공유하고 생각 차이를 인정합니다"</div>
+  </div>
+
+  <!-- WEEK TABS -->
+  <div class="week-nav">
+    <button class="wn-btn" onclick="showWeek(1,this)">Week 1<span class="wn-sub">리더 스토리</span></button>
+    <button class="wn-btn" onclick="showWeek(2,this)">Week 2<span class="wn-sub">팀 개선팁 릴레이</span></button>
+    <button class="wn-btn" onclick="showWeek(3,this)">Week 3<span class="wn-sub">인정 스티커</span></button>
+    <button class="wn-btn active" onclick="showWeek(4,this)">Week 4<span class="wn-sub">팀 세미나</span></button>
+  </div>
+
+  <!-- ══ WEEK 1 ════════════════════════════════════ -->
+  <div class="week-panel" id="week1">
+    <div class="w1-intro"><strong>리더 메시지 — 밸런스 선택</strong><br>본부장/사업부장 → 실장/소장 → 팀장 순으로 2가지 밸런스 질문에 입장을 선택하고 200자 이내로 철학을 작성합니다. 구성원도 익명으로 동일 질문에 참여할 수 있습니다.</div>
+
+    <!-- TWO Q CARDS SIDE BY SIDE -->
+    <div class="balance-pair">
+      <div class="balance-q-card">
+        <div class="bq-label">정보 공유 방식</div>
+        <div class="bq-question">업무 정보를 공유할 때 어떤 방식이 맞다고 생각하시나요?</div>
+        <div class="bq-choices">
+          <div class="bq-choice sel-a" onclick="selChoice(this,&#39;q1&#39;,&#39;a&#39;)">📖 배경·맥락까지<br>모두 공유한다</div>
+          <div class="bq-choice" onclick="selChoice(this,&#39;q1&#39;,&#39;b&#39;)">⚡ 핵심 결론만<br>빠르게 전달한다</div>
+        </div>
+        <div class="dist-wrap">
+          <div class="dist-lrow"><span class="dist-la">📖 배경·맥락 62%</span><span class="dist-lb">38% 핵심만 ⚡</span></div>
+          <div class="dist-bar"><div class="dist-ba" style="width:62%">62%</div><div class="dist-bb">38%</div></div>
+        </div>
+      </div>
+      <div class="balance-q-card">
+        <div class="bq-label">보고 타이밍</div>
+        <div class="bq-question">직원들이 보고할 때 어떤 방식을 선호하시나요?</div>
+        <div class="bq-choices">
+          <div class="bq-choice sel-a" onclick="selChoice(this,&#39;q2&#39;,&#39;a&#39;)">🚀 미확정이어도<br>빨리 공유</div>
+          <div class="bq-choice" onclick="selChoice(this,&#39;q2&#39;,&#39;b&#39;)">🎯 명확할 때<br>정확하게 보고</div>
+        </div>
+        <div class="dist-wrap">
+          <div class="dist-lrow"><span class="dist-la">🚀 빨리 공유 55%</span><span class="dist-lb">45% 명확할 때 🎯</span></div>
+          <div class="dist-bar"><div class="dist-ba" style="width:55%">55%</div><div class="dist-bb">45%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">리더 메시지</div>
+    <div class="leader-msgs-grid">
+      <!-- 본부장 -->
+      <div class="lmsg-card">
+        <div class="lmsg-header">
+          <div class="person-photo">
+            <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="26" cy="26" r="26" fill="#0F766E"></circle>
+              <circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle>
+              <ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse>
+              <path d="M16 17 Q26 9 36 17 L36 13 Q26 5 16 13Z" fill="#3D2B1F"></path>
+              <circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle>
+              <circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle>
+              <path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
+              <rect x="18" y="39" width="16" height="9" rx="4" fill="#0F766E"></rect>
+            </svg>
+          </div>
+          <div>
+            <div class="lmsg-name">김성훈 본부장</div>
+            <div class="lmsg-role">전략사업본부</div>
+          </div>
+          <div class="lmsg-choice-badge" style="background:var(--m1l);color:var(--m1d)">배경·맥락 공유</div>
+        </div>
+        <div class="lmsg-body">
+          <div class="lmsg-q-row">
+            <div class="lmsg-q-lbl">Q① 정보 공유 방식</div>
+            <div class="lmsg-selected" style="background:var(--m1l);color:var(--m1d)">📖 배경·맥락까지 모두 공유</div>
+            <button class="reason-btn" onclick="toggleMemo(this)">📝 이유 보기 ▾</button>
+            <div class="lmsg-memo">"빠른 결론도 중요하지만, 구성원이 맥락을 이해해야 더 좋은 판단을 내릴 수 있습니다. '왜 이 일을 하는가'를 먼저 공유하는 것이 팀의 자율성을 높입니다."</div>
+          </div>
+          <div class="lmsg-q-row">
+            <div class="lmsg-q-lbl">Q② 보고 타이밍</div>
+            <div class="lmsg-selected" style="background:var(--m1l);color:var(--m1d)">🚀 미확정이어도 빨리 공유</div>
+            <button class="reason-btn" onclick="toggleMemo(this)">📝 이유 보기 ▾</button>
+            <div class="lmsg-memo">"'아직 확정 아님'을 명시하고 빨리 공유하면 팀 전체가 함께 대비할 수 있습니다."</div>
+          </div>
+        </div>
+        <div class="lmsg-footer">
+          <button class="like-btn" onclick="toggleLike(this)">❤️ <span>14</span></button>
+          <button class="cmt-btn" onclick="toggleCmt(this)">💬 댓글 <span>3</span></button>
+        </div>
+        <div class="cmt-area">
+          <div class="cmt-item"><div class="ci-av">익</div>배경 먼저 설명해 주시니 업무 의도가 훨씬 명확해졌어요!</div>
+          <div class="cmt-item"><div class="ci-av">익</div>맥락 공유가 팀 신뢰의 시작이라고 생각해요.</div>
+          <div class="cmt-irow"><input class="cmt-input" type="text" placeholder="댓글 달기 (익명)"><button class="cmt-send" onclick="addCmt(this)">등록</button></div>
+        </div>
+      </div>
+      <!-- 실장 -->
+      <div class="lmsg-card">
+        <div class="lmsg-header">
+          <div class="person-photo">
+            <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="26" cy="26" r="26" fill="#7C3AED"></circle>
+              <circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle>
+              <ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse>
+              <path d="M16 16 Q26 8 36 16" stroke="#5B2D8A" stroke-width="4" fill="none" stroke-linecap="round"></path>
+              <circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle>
+              <circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle>
+              <path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
+              <rect x="19" y="19" width="7" height="4" rx="1.5" fill="none" stroke="#555" stroke-width="1"></rect>
+              <rect x="27" y="19" width="7" height="4" rx="1.5" fill="none" stroke="#555" stroke-width="1"></rect>
+              <line x1="26" y1="21" x2="27" y2="21" stroke="#555" stroke-width="1"></line>
+              <rect x="18" y="39" width="16" height="9" rx="4" fill="#7C3AED"></rect>
+            </svg>
+          </div>
+          <div>
+            <div class="lmsg-name">이정민 실장</div>
+            <div class="lmsg-role">기획운영실</div>
+          </div>
+          <div class="lmsg-choice-badge" style="background:#F5F3FF;color:#6D28D9">핵심만 전달</div>
+        </div>
+        <div class="lmsg-body">
+          <div class="lmsg-q-row">
+            <div class="lmsg-q-lbl">Q① 정보 공유 방식</div>
+            <div class="lmsg-selected" style="background:#F5F3FF;color:#6D28D9">⚡ 핵심 결론만 빠르게 전달</div>
+            <button class="reason-btn" onclick="toggleMemo(this)">📝 이유 보기 ▾</button>
+            <div class="lmsg-memo">"바쁜 환경에서 모든 배경을 전달하면 정보 피로가 생깁니다. 핵심을 먼저 주고 필요한 분이 추가 질문하는 방식이 효율적입니다."</div>
+          </div>
+          <div class="lmsg-q-row">
+            <div class="lmsg-q-lbl">Q② 보고 타이밍</div>
+            <div class="lmsg-selected" style="background:var(--m1l);color:var(--m1d)">🚀 미확정이어도 빨리 공유</div>
+            <button class="reason-btn" onclick="toggleMemo(this)">📝 이유 보기 ▾</button>
+            <div class="lmsg-memo">"확정을 기다리다 기회를 놓치는 것보다, 현재 상황을 공유하고 함께 방향을 잡는 것이 낫습니다."</div>
+          </div>
+        </div>
+        <div class="lmsg-footer">
+          <button class="like-btn" onclick="toggleLike(this)">❤️ <span>9</span></button>
+          <button class="cmt-btn" onclick="toggleCmt(this)">💬 댓글 <span>1</span></button>
+        </div>
+        <div class="cmt-area">
+          <div class="cmt-item"><div class="ci-av">익</div>핵심 공유가 집중력에 도움이 됩니다.</div>
+          <div class="cmt-irow"><input class="cmt-input" type="text" placeholder="댓글 달기 (익명)"><button class="cmt-send" onclick="addCmt(this)">등록</button></div>
+        </div>
+      </div>
+      <!-- 팀장 -->
+      <div class="lmsg-card">
+        <div class="lmsg-header">
+          <div class="person-photo">
+            <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="26" cy="26" r="26" fill="#0369A1"></circle>
+              <circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle>
+              <ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse>
+              <rect x="20" y="12" width="12" height="5" rx="2.5" fill="#1E3A5F"></rect>
+              <circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle>
+              <circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle>
+              <path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path>
+              <path d="M22 14 Q26 10 30 14" stroke="#1E3A5F" stroke-width="3.5" fill="none"></path>
+              <rect x="18" y="39" width="16" height="9" rx="4" fill="#0369A1"></rect>
+            </svg>
+          </div>
+          <div>
+            <div class="lmsg-name">박재원 팀장</div>
+            <div class="lmsg-role">개발1팀</div>
+          </div>
+          <div class="lmsg-choice-badge" style="background:var(--m1l);color:var(--m1d)">배경·맥락 공유</div>
+        </div>
+        <div class="lmsg-body">
+          <div class="lmsg-q-row">
+            <div class="lmsg-q-lbl">Q① 정보 공유 방식</div>
+            <div class="lmsg-selected" style="background:var(--m1l);color:var(--m1d)">📖 배경·맥락까지 모두 공유</div>
+            <button class="reason-btn" onclick="toggleMemo(this)">📝 이유 보기 ▾</button>
+            <div class="lmsg-memo">"이달부터 업무 지시 시 반드시 '이 일을 하는 이유'를 한 줄 이상 함께 공유하겠습니다."</div>
+          </div>
+          <div class="lmsg-q-row">
+            <div class="lmsg-q-lbl">Q② 보고 타이밍</div>
+            <div class="lmsg-selected" style="background:#F5F3FF;color:#6D28D9">🎯 명확할 때 정확하게 보고</div>
+            <button class="reason-btn" onclick="toggleMemo(this)">📝 이유 보기 ▾</button>
+            <div class="lmsg-memo">"개발 특성상 미확정 정보가 혼란을 줄 수 있습니다. 단, 2일 이상 지연 시 '진행 중' 상태라도 공유하는 것을 원칙으로 합시다."</div>
+          </div>
+        </div>
+        <div class="lmsg-footer">
+          <button class="like-btn" onclick="toggleLike(this)">❤️ <span>21</span></button>
+          <button class="cmt-btn" onclick="toggleCmt(this)">💬 댓글 <span>5</span></button>
+        </div>
+        <div class="cmt-area">
+          <div class="cmt-item"><div class="ci-av">익</div>이유를 알면 일하기가 훨씬 수월해요.</div>
+          <div class="cmt-item"><div class="ci-av">익</div>2일 기준이 구체적이라 실천하기 좋아요!</div>
+          <div class="cmt-irow"><input class="cmt-input" type="text" placeholder="댓글 달기 (익명)"><button class="cmt-send" onclick="addCmt(this)">등록</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ WEEK 2 ════════════════════════════════════ -->
+  <div class="week-panel" id="week2">
+    <div class="w2-layout">
+      <div>
+        <div class="sec-label">리더 메시지 (고정)</div>
+        <div class="w2-leader-panel">
+          <div class="w2lp-header"><div class="w2lp-tag">리더 메시지 기준</div><div class="w2lp-title">본부장 → 실장 → 팀장</div></div>
+          <div class="lmi"><div class="lmi-role"><div class="lmi-dot" style="background:#0F766E"></div>본부장</div><div class="lmi-name">김성훈 본부장 · 전략사업본부</div><div class="lmi-msg">"정보는 혼자 갖고 있으면 힘이 되지만, 나누면 시너지가 됩니다. 구성원이 맥락을 이해해야 더 좋은 판단을 내릴 수 있습니다."</div></div>
+          <div class="lmi"><div class="lmi-role"><div class="lmi-dot" style="background:#7C3AED"></div>실장</div><div class="lmi-name">이정민 실장 · 기획운영실</div><div class="lmi-msg">"핵심을 먼저 공유하되, 현재 상황을 팀과 함께 나눠야 올바른 방향을 잡을 수 있습니다."</div></div>
+          <div class="lmi"><div class="lmi-role"><div class="lmi-dot" style="background:#0369A1"></div>팀장</div><div class="lmi-name">박재원 팀장 · 개발1팀</div><div class="lmi-msg">"이달부터 업무 지시 시 반드시 '이 일을 하는 이유'를 한 줄 이상 함께 공유합니다."</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="sec-label">팀 개선팁 릴레이</div>
+        <div class="relay-board">
+          <div class="rb-header">
+            <span class="rb-title">📋 개발1팀 릴레이 보드</span>
+            <div class="rb-prog-wrap">
+              <div class="rb-prog-top"><span>참여 현황</span><span id="rbNum">11 / 14명 완료</span></div>
+              <div class="rb-prog-bar" id="rbBar"><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgb(74, 122, 16);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgba(61, 80, 16, 0.12);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgba(61, 80, 16, 0.12);"></div><div class="rb-seg" style="flex: 1 1 0%; margin: 0px 1px; border-radius: 4px; background: rgba(61, 80, 16, 0.12);"></div></div>
+            </div>
+          </div>
+          <div class="rb-body" id="rbBody">
+            <div class="chalk-line"><span class="cl-num">1</span><span class="cl-msg">업무 요청 시 Slack 첫 줄에 반드시 '목적'을 적는 룰을 만들면 좋겠습니다.</span><button class="cl-like on" onclick="clLike(this)">👍 8</button></div>
+            <div class="chalk-line"><span class="cl-num">2</span><span class="cl-msg">주간 회의에서 각자 '이번 주 공유할 정보 1가지'를 필수로 발표하면 자연스럽게 정보 공유 문화가 만들어질 것 같아요.</span><button class="cl-like" onclick="clLike(this)">👍 5</button></div>
+            <div class="chalk-line"><span class="cl-num">3</span><span class="cl-msg">의견이 다를 때 "이건 내 생각인데"라는 표현으로 시작하면 서로 방어적이 되지 않을 것 같습니다.</span><button class="cl-like on" onclick="clLike(this)">👍 12</button></div>
+            <div class="chalk-line"><span class="cl-num">4</span><span class="cl-msg">중요 결정 후 48시간 내 팀 채널에 결정 배경을 간략히 공유하는 규칙을 만들면 어떨까요?</span><button class="cl-like" onclick="clLike(this)">👍 9</button></div>
+            <div class="chalk-line"><span class="cl-num">5</span><span class="cl-msg">반박하기 전에 "어떤 이유에서 그렇게 생각했어?" 한 마디 먼저 물어보기.</span><button class="cl-like on" onclick="clLike(this)">👍 15</button></div>
+            <div class="chalk-line"><span class="cl-num">6</span><span class="cl-msg">문제가 생기면 해결 전에도 팀장에게 먼저 알리기 — 혼자 끌어안지 말기.</span><button class="cl-like" onclick="clLike(this)">👍 7</button></div>
+            <div class="chalk-line"><span class="cl-num">7</span><span class="cl-msg">다른 생각을 가진 팀원의 말도 끝까지 들어준 후 내 의견을 말하는 '3초 rule'을 실천해보고 싶어요.</span><button class="cl-like" onclick="clLike(this)">👍 6</button></div>
+            <div class="chalk-line"><span class="cl-num">8</span><span class="cl-msg">'#정보공유' '#의견요청' 태그를 붙여서 목적을 명확히 하면 읽는 사람도 편할 것 같아요.</span><button class="cl-like" onclick="clLike(this)">👍 4</button></div>
+            <div class="chalk-line"><span class="cl-num">9</span><span class="cl-msg">일주일에 한 번 '이번 주 배운 것' 한 줄을 돌아가며 공유하는 시간을 갖자고 제안합니다.</span><button class="cl-like" onclick="clLike(this)">👍 10</button></div>
+            <div class="chalk-line"><span class="cl-num">10</span><span class="cl-msg">"틀렸다"가 아닌 "다른 관점이 있네요"라는 표현을 의식적으로 사용하기.</span><button class="cl-like on" onclick="clLike(this)">👍 11</button></div>
+            <div class="chalk-line"><span class="cl-num">11</span><span class="cl-msg">업무 완료 후 회고 한 줄을 팀 채널에 남기면 다음 사람이 참고할 수 있을 것 같습니다.</span><button class="cl-like" onclick="clLike(this)">👍 3</button></div>
+          </div>
+          <div class="rb-input-area">
+            <div class="rb-next">다음 순서: <strong>박도현님</strong> — 리더 메시지를 보고 우리 팀 실천 방안을 한 가지 적어주세요</div>
+            <div class="rb-irow">
+              <input class="rb-input" type="text" id="rbInput" placeholder="우리 팀이 실천할 수 있는 소통 방법을 한 가지 적어주세요..." maxlength="120">
+              <button class="rb-send" onclick="addRelay()">등록</button>
+              <button class="rb-nominate" onclick="nominateNext()">👤 다음 사람 지목</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ WEEK 3 ════════════════════════════════════ -->
+  <div class="week-panel" id="week3">
+    <!-- STICKER PICKER ALWAYS VISIBLE AT TOP -->
+    <div class="w3-top-picker">
+      <div class="w3-tp-header">
+        <div class="w3-tp-title">스티커 선택 <span style="font-weight:500;color:var(--muted);font-size:14px">— 팀원을 먼저 선택한 후 스티커를 골라주세요</span></div>
+        <div class="w3-tp-sel" id="chosenCount">0 / 3개</div>
+      </div>
+      <div class="stickers-grid">
+        <div class="sticker-item" data-emoji="🫂" data-bg="linear-gradient(135deg,#DBEAFE,#BFDBFE)" data-name="든든동료" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE)">🫂</div><span class="s-name">든든동료</span></div>
+        <div class="sticker-item" data-emoji="🔍" data-bg="linear-gradient(135deg,#DCFCE7,#BBF7D0)" data-name="꼼꼼체크" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#DCFCE7,#BBF7D0)">🔍</div><span class="s-name">꼼꼼체크</span></div>
+        <div class="sticker-item" data-emoji="✨" data-bg="linear-gradient(135deg,#FEF9C3,#FEF08A)" data-name="분위기메이커" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#FEF9C3,#FEF08A)">✨</div><span class="s-name">분위기메이커</span></div>
+        <div class="sticker-item" data-emoji="💡" data-bg="linear-gradient(135deg,#FEF3C7,#FDE68A)" data-name="아이디어뱅크" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">💡</div><span class="s-name">아이디어뱅크</span></div>
+        <div class="sticker-item" data-emoji="📚" data-bg="linear-gradient(135deg,#F3E8FF,#E9D5FF)" data-name="배울점줍줍" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#F3E8FF,#E9D5FF)">📚</div><span class="s-name">배울점줍줍</span></div>
+        <div class="sticker-item" data-emoji="🦁" data-bg="linear-gradient(135deg,#FFE4E6,#FECDD3)" data-name="당당용기" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#FFE4E6,#FECDD3)">🦁</div><span class="s-name">당당용기</span></div>
+        <div class="sticker-item" data-emoji="👂" data-bg="linear-gradient(135deg,#CFFAFE,#A5F3FC)" data-name="경청의왕" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#CFFAFE,#A5F3FC)">👂</div><span class="s-name">경청의왕</span></div>
+        <div class="sticker-item" data-emoji="🤝" data-bg="linear-gradient(135deg,#ECFCCB,#D9F99D)" data-name="함께쭉가자" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#ECFCCB,#D9F99D)">🤝</div><span class="s-name">함께쭉가자</span></div>
+        <div class="sticker-item" data-emoji="💪" data-bg="linear-gradient(135deg,#FFF7ED,#FED7AA)" data-name="일당백" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#FFF7ED,#FED7AA)">💪</div><span class="s-name">일당백</span></div>
+        <div class="sticker-item" data-emoji="😌" data-bg="linear-gradient(135deg,#F0FDF4,#BBF7D0)" data-name="세상편함" onclick="chooseSticker(this)"><div class="s-circle" style="background:linear-gradient(135deg,#F0FDF4,#BBF7D0)">😌</div><span class="s-name">세상편함</span></div>
+      </div>
+      <div class="w3-apply-row">
+        <button class="w3-apply-btn" id="applyBtn" onclick="applyStickers()" disabled="">스티커 붙이기 ✓</button>
+        <span class="w3-sel-info" id="w3selInfo">팀원 카드를 먼저 선택해주세요</span>
+      </div>
+    </div>
+
+    <div class="w3-layout">
+      <div>
+        <div class="sticker-rank-panel">
+          <div class="srp-title">🏆 스티커 TOP 랭킹</div>
+          <div class="srp-row"><div class="srp-rank gold">1</div><div class="srp-av" style="background:linear-gradient(135deg,#0369A1,#0F766E)">박</div><div class="srp-info"><div class="srp-name">박도현</div><div class="srp-sb">👂 경청의왕</div></div><div class="srp-cnt">×18</div></div>
+          <div class="srp-row"><div class="srp-rank silver">2</div><div class="srp-av" style="background:linear-gradient(135deg,#7C3AED,#A855F7)">이</div><div class="srp-info"><div class="srp-name">이서연</div><div class="srp-sb">💡 아이디어뱅크</div></div><div class="srp-cnt">×14</div></div>
+          <div class="srp-row"><div class="srp-rank bronze">3</div><div class="srp-av" style="background:linear-gradient(135deg,#0F766E,#059669)">김</div><div class="srp-info"><div class="srp-name">김민준</div><div class="srp-sb">🫂 든든동료</div></div><div class="srp-cnt">×12</div></div>
+          <div class="srp-row"><div class="srp-rank">4</div><div class="srp-av" style="background:linear-gradient(135deg,#B45309,#D97706)">최</div><div class="srp-info"><div class="srp-name">최지우</div><div class="srp-sb">🔍 꼼꼼체크</div></div><div class="srp-cnt">×10</div></div>
+          <div class="srp-row"><div class="srp-rank">5</div><div class="srp-av" style="background:linear-gradient(135deg,#BE185D,#EC4899)">한</div><div class="srp-info"><div class="srp-name">한수진</div><div class="srp-sb">✨ 분위기메이커</div></div><div class="srp-cnt">×8</div></div>
+        </div>
+      </div>
+      <div class="sticker-area">
+        <div class="sa-header">
+          <div class="sa-title">개발1팀 팀원 — 스티커 붙여주기</div>
+          <div class="sa-guide">팀원 선택 후 위에서 스티커를 골라 붙여주세요</div>
+        </div>
+        <div class="sa-members">
+          <div class="member-card" onclick="selectMember(this,&#39;김민준&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#0F766E"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><path d="M16 17 Q26 9 36 17 L36 13 Q26 5 16 13Z" fill="#3D2B1F"></path><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">김민준</div><div class="mc-stickers-wrap" id="ms-김민준"><div class="mc-applied-sticker"><div class="mc-ast-circle" style="background:linear-gradient(135deg,#FEF9C3,#FEF08A)" title="분위기메이커">✨</div><div class="mc-ast-name">분위기메이커</div></div><div class="mc-applied-sticker"><div class="mc-ast-circle" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)" title="아이디어뱅크">💡</div><div class="mc-ast-name">아이디어뱅크</div></div><div class="mc-applied-sticker"><div class="mc-ast-circle" style="background:linear-gradient(135deg,#F3E8FF,#E9D5FF)" title="배울점줍줍">📚</div><div class="mc-ast-name">배울점줍줍</div></div></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;이서연&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#7C3AED"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><path d="M16 16 Q26 8 36 16" stroke="#5B2D8A" stroke-width="4" fill="none" stroke-linecap="round"></path><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">이서연</div><div class="mc-stickers-wrap" id="ms-이서연"></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;박도현&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#0369A1"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><rect x="20" y="12" width="12" height="5" rx="2.5" fill="#1E3A5F"></rect><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">박도현</div><div class="mc-stickers-wrap" id="ms-박도현"></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;최지우&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#B45309"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 24 Q26 28 29 24" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">최지우</div><div class="mc-stickers-wrap" id="ms-최지우"></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;한수진&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#BE185D"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><path d="M16 16 Q26 8 36 16" stroke="#8B0040" stroke-width="4" fill="none" stroke-linecap="round"></path><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">한수진</div><div class="mc-stickers-wrap" id="ms-한수진"></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;정우성&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#0F766E"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><path d="M16 17 Q26 9 36 17 L36 13 Q26 5 16 13Z" fill="#2D1B00"></path><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 23 Q26 25 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">정우성</div><div class="mc-stickers-wrap" id="ms-정우성"></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;오민지&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#7C3AED"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><path d="M15 14 Q26 6 37 14" stroke="#5B2D8A" stroke-width="4" fill="none" stroke-linecap="round"></path><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 23 Q26 26 29 23" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">오민지</div><div class="mc-stickers-wrap" id="ms-오민지"></div></div>
+          <div class="member-card" onclick="selectMember(this,&#39;강태양&#39;)"><div class="mc-face"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="26" fill="#B45309"></circle><circle cx="26" cy="20" r="10" fill="#FDDCB5"></circle><ellipse cx="26" cy="44" rx="14" ry="9" fill="#FDDCB5"></ellipse><rect x="21" y="11" width="10" height="5" rx="2.5" fill="#7A3A00"></rect><circle cx="22" cy="19" r="1.8" fill="#1a0d00"></circle><circle cx="30" cy="19" r="1.8" fill="#1a0d00"></circle><path d="M23 24 Q26 27 29 24" stroke="#C68642" stroke-width="1.2" fill="none" stroke-linecap="round"></path></svg></div><div class="mc-name">강태양</div><div class="mc-stickers-wrap" id="ms-강태양"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ WEEK 4 ════════════════════════════════════ -->
+  <div class="week-panel active" id="week4">
+    <div class="w4-card">
+      <div class="w4-header">
+        <div class="w4h-lbl">Week 4 · 팀 세미나 완료 후</div>
+        <div class="w4h-title">팀 그라운드룰 입력</div>
+        <div class="w4h-desc">세미나에서 확정된 그라운드룰을 입력해주세요. 팀장만 입력 가능하며 팀원 전체에게 공개됩니다.</div>
+      </div>
+      <div class="w4-body">
+        <div class="w4-role-badge">🔒 팀장 전용 입력 화면</div>
+        <div class="w4-flbl">우리 팀의 소통 그라운드룰</div>
+        <div class="w4-fdesc">Week 2~3 릴레이 메시지 중 팀원 투표로 가장 공감받은 내용을 기반으로 작성해주세요.</div>
+        <textarea class="w4-ta" id="groundrule" placeholder="팀 세미나에서 구성원들과 결정한 소통 그라운드룰을 상세히 작성해주세요"></textarea>
+        <div class="w4-dgrid">
+          <div class="w4-df"><div class="w4-dfl">📅 실천 기간</div><input class="w4-dfi" type="text" placeholder="실천 기간을 입력해주세요"></div>
+          <div class="w4-df"><div class="w4-dfl">🔄 실천 횟수·빈도</div><input class="w4-dfi" type="text" placeholder="횟수와 빈도를 입력해주세요"></div>
+          <div class="w4-df"><div class="w4-dfl">📌 실천 방식</div><input class="w4-dfi" type="text" placeholder="구체적인 실천 방식을 입력해주세요"></div>
+          <div class="w4-df"><div class="w4-dfl">📊 점검 방법</div><input class="w4-dfi" type="text" placeholder="점검 방법을 입력해주세요"></div>
+        </div>
+        <div class="w4-photo-lbl">📸 세미나 진행 사진 업로드</div>
+        <label class="w4-drop"><span style="font-size:28px">📷</span><div><div style="font-size:14px;font-weight:700;color:var(--text)">사진 파일 선택</div><div style="font-size:12px;color:var(--muted)">JPG, PNG · 최대 10MB</div></div><input type="file" accept="image/*" style="display:none" onchange="previewPhoto(this)"></label>
+        <div id="photoPreview" style="margin-top:10px;display:none"><img id="previewImg" style="max-width:100%;border-radius:10px;border:1px solid var(--border)"></div>
+        <button class="w4-submit" onclick="submitGR()">✅ 그라운드룰 확정 및 운영팀 제출</button>
+      </div>
+      <div class="w4-result" id="w4result">
+        <div class="w4r-lbl">📌 우리 팀 확정 그라운드룰</div>
+        <div class="w4r-rule" id="w4rText"></div>
+        <div class="w4r-dets">
+          <div class="w4r-det"><div class="w4r-dk">실천 기간</div><div class="w4r-dv" id="w4rP">—</div></div>
+          <div class="w4r-det"><div class="w4r-dk">실천 빈도</div><div class="w4r-dv" id="w4rF">—</div></div>
+          <div class="w4r-det"><div class="w4r-dk">실천 방식</div><div class="w4r-dv" id="w4rM">—</div></div>
+          <div class="w4r-det"><div class="w4r-dk">점검 방법</div><div class="w4r-dv" id="w4rC">—</div></div>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--muted)">✅ 운영팀 전송 완료 · 팀원 전체 공개 완료</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DB_H=172;
+let dbVisible=true;
+function toggleDB(){
+  const db=document.getElementById('db');
+  const btn=document.getElementById('dbToggleBtn');
+  dbVisible=!dbVisible;
+  if(dbVisible){
+    db.classList.remove('hidden');
+    document.body.style.paddingTop=DB_H+'px';
+    btn.textContent='▲ 대시보드 숨기기';
+  } else {
+    db.classList.add('hidden');
+    document.body.style.paddingTop='0';
+    btn.textContent='▼ 대시보드 보이기';
+  }
+}
+function showWeek(n,btn){
+  document.querySelectorAll('.week-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.wn-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('week'+n).classList.add('active');btn.classList.add('active');
+}
+function toggleMi(b){b.classList.toggle('done');b.textContent=b.classList.contains('done')?'✓':'';}
+function toggleProg(btn){
+  const d=document.getElementById('progInline');d.classList.toggle('open');
+  btn.textContent=d.classList.contains('open')?'📊 실/본부 접기 ▴':'📊 실/본부 상세 ▾';
+}
+function selChoice(el,q,s){
+  el.closest('.balance-q-card').querySelectorAll('.bq-choice').forEach(c=>c.classList.remove('sel-a','sel-b'));
+  el.classList.add(s==='a'?'sel-a':'sel-b');
+}
+function toggleMemo(btn){
+  const m=btn.nextElementSibling;m.classList.toggle('open');
+  btn.textContent=m.classList.contains('open')?'📝 닫기 ▴':'📝 이유 보기 ▾';
+}
+function toggleLike(btn){
+  btn.classList.toggle('liked');const s=btn.querySelector('span');
+  s.textContent=btn.classList.contains('liked')?+s.textContent+1:+s.textContent-1;
+}
+function toggleCmt(btn){btn.closest('.lmsg-footer').nextElementSibling.classList.toggle('open')}
+function addCmt(btn){
+  const row=btn.parentElement;const inp=row.querySelector('.cmt-input');const v=inp.value.trim();if(!v)return;
+  const area=btn.closest('.cmt-area');const item=document.createElement('div');item.className='cmt-item';
+  item.innerHTML=`<div class="ci-av">익</div>${v}`;area.insertBefore(item,row);inp.value='';
+}
+// Week 2
+const TOTAL=14;let filled=11;
+function buildBar(){
+  const bar=document.getElementById('rbBar');bar.innerHTML='';
+  for(let i=0;i<TOTAL;i++){
+    const s=document.createElement('div');s.className='rb-seg';
+    s.style.flex='1';s.style.margin='0 1px';s.style.borderRadius='4px';
+    s.style.background=i<filled?'#4A7A10':'rgba(61,80,16,.12)';
+    bar.appendChild(s);
+  }
+  document.getElementById('rbNum').textContent=`${filled} / ${TOTAL}명 완료`;
+}
+buildBar();
+function addRelay(){
+  const inp=document.getElementById('rbInput');const v=inp.value.trim();if(!v)return;
+  const body=document.getElementById('rbBody');const n=body.querySelectorAll('.chalk-line').length;
+  const d=document.createElement('div');d.className='chalk-line';
+  d.innerHTML=`<span class="cl-num">${n+1}</span><span class="cl-msg">${v}</span><button class="cl-like" onclick="clLike(this)">👍 0</button>`;
+  body.appendChild(d);inp.value='';body.scrollTop=body.scrollHeight;
+  filled=Math.min(filled+1,TOTAL);buildBar();
+}
+function nominateNext(){
+  const names=['박도현','최지우','한수진','정우성','오민지','강태양'];
+  const n=names[Math.floor(Math.random()*names.length)];
+  document.querySelector('.rb-next').innerHTML=`다음 순서: <strong>${n}님</strong> — 리더 메시지를 보고 우리 팀 실천 방안을 한 가지 적어주세요`;
+  alert(`✅ ${n}님을 다음 주자로 지목했습니다! 알림이 발송됩니다.`);
+}
+function clLike(btn){
+  btn.classList.toggle('on');const p=btn.textContent.split(' ');const n=parseInt(p[1])||0;
+  btn.textContent=`👍 ${btn.classList.contains('on')?n+1:n-1}`;
+}
+// Week 3
+let selMember=null;
+function selectMember(card,name){
+  document.querySelectorAll('.member-card').forEach(c=>c.classList.remove('selected'));
+  const wrap=document.getElementById('ms-'+name);
+  const existing=wrap?wrap.querySelectorAll('.mc-applied-sticker').length:0;
+  if(existing>=3){alert('이미 최대 3개의 스티커가 붙어있습니다.');return;}
+  card.classList.add('selected');selMember=name;
+  document.getElementById('w3selInfo').textContent=`→ ${name}님에게 스티커를 붙여주세요 (현재 ${existing}/3개)`;
+  document.querySelectorAll('.sticker-item').forEach(s=>s.classList.remove('chosen'));
+  document.getElementById('chosenCount').textContent='0 / 3개';
+  document.getElementById('applyBtn').disabled=true;
+}
+function chooseSticker(el){
+  if(!selMember){alert('먼저 팀원을 선택해주세요.');return;}
+  const wrap=document.getElementById('ms-'+selMember);
+  const existing=wrap?wrap.querySelectorAll('.mc-applied-sticker').length:0;
+  const picked=document.querySelectorAll('.sticker-item.chosen').length;
+  if(!el.classList.contains('chosen')&&(existing+picked)>=3){alert('최대 3개까지 선택 가능합니다.');return;}
+  el.classList.toggle('chosen');
+  const cnt=document.querySelectorAll('.sticker-item.chosen').length;
+  document.getElementById('chosenCount').textContent=`${cnt} / 3개`;
+  document.getElementById('applyBtn').disabled=cnt===0;
+}
+function applyStickers(){
+  if(!selMember)return;
+  const wrap=document.getElementById('ms-'+selMember);
+  document.querySelectorAll('.sticker-item.chosen').forEach(s=>{
+    const emoji=s.getAttribute('data-emoji');const bg=s.getAttribute('data-bg');const name=s.getAttribute('data-name');
+    const el=document.createElement('div');el.className='mc-applied-sticker';
+    el.innerHTML=`<div class="mc-ast-circle" style="background:${bg}" title="${name}">${emoji}</div><div class="mc-ast-name">${name}</div>`;
+    wrap.appendChild(el);
+  });
+  document.querySelectorAll('.sticker-item').forEach(s=>s.classList.remove('chosen'));
+  document.getElementById('chosenCount').textContent='0 / 3개';
+  document.getElementById('applyBtn').disabled=true;
+  document.querySelectorAll('.member-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('w3selInfo').textContent='팀원 카드를 먼저 선택해주세요';
+  selMember=null;
+}
+// Week 4
+function submitGR(){
+  const rule=document.getElementById('groundrule').value.trim();if(!rule){alert('그라운드룰을 입력해주세요.');return;}
+  document.getElementById('w4rText').textContent=rule;
+  const inps=document.querySelectorAll('.w4-dfi');const ids=['w4rP','w4rF','w4rM','w4rC'];
+  inps.forEach((inp,i)=>{document.getElementById(ids[i]).textContent=inp.value||'—';});
+  document.getElementById('w4result').classList.add('show');alert('✅ 그라운드룰이 확정되었습니다!');
+}
+function previewPhoto(input){
+  if(!input.files||!input.files[0])return;
+  const r=new FileReader();r.onload=e=>{document.getElementById('previewImg').src=e.target.result;document.getElementById('photoPreview').style.display='block';};r.readAsDataURL(input.files[0]);
+}
+</script>
+
+
+</body></html>
